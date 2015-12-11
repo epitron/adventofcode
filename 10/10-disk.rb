@@ -1,21 +1,5 @@
 require 'pathname'
 
-def xform_each_cons(s)
-  result = []
-  count  = 0
-
-  (s.chars + [nil]).each_cons(2) do |a,b|
-    count += 1
-
-    if a != b
-      result << "#{count}#{a}"
-      count = 0
-    end
-  end
-
-  result.join
-end
-
 def xform_file(infile, outfile)
   count     = 0
   counts    = Hash.new(0)
@@ -44,7 +28,6 @@ def xform_file(infile, outfile)
 
   counts
 end
-
 
 def normalized_counts(c)
   total = c.values.reduce(:+)
@@ -78,19 +61,6 @@ iterations.times do |n|
   s2    = File.size(outfile)
   ratio = Rational(s, last_s)
 
-  puts "#{normalized_counts counts} | #{s} (#{s2}) | #{ratio} = #{ratio.to_f}"
+  puts "#{n+1} | #{normalized_counts counts} | #{s} (#{s2}) | #{ratio} = #{ratio.to_f}"
   last_s = s
 end
-
-# 10.times do
-#   # input = xform_each_cons(input)
-#   counts, new_file = xform_file(input, output)
-
-#   s      = input.size
-#   ratio  = s / last_s.to_f
-#   counts = Hash.new(0)
-#   input.each_char { |c| counts[c] += 1 }
-
-#   puts "#{normalized_counts counts} | #{s} | #{ratio}"
-#   last_s = s
-# end

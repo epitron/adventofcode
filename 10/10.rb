@@ -53,20 +53,22 @@ end
 # )
 
 def normalized_counts(c)
-  max = c.values.max.to_f
-  "%0.3f %0.3f %0.3f" % [c["1"]/max, c["2"]/max, c["3"]/max]
+  max = c.values.reduce(:+)
+  #"%0.3f %0.3f %0.3f" % [c["1"]/max, c["2"]/max, c["3"]/max]
+  [Rational(c["1"],max), Rational(c["2"],max), Rational(c["3"],max)]
 end
 
 last_s = 1
 input = "1"
-300.times do
+300.times do |n|
   input = xform_each_cons(input)
 
   s      = input.size
-  ratio  = s / last_s.to_f
   counts = Hash.new(0)
   input.each_char { |c| counts[c] += 1 }
+  conway = Rational(s, last_s)
 
-  puts "#{normalized_counts counts} | #{s} | #{ratio}"
+  puts "#{n} | #{normalized_counts counts} | #{s} | #{conway} = #{conway.to_f}"
   last_s = s
+  GC.start
 end
