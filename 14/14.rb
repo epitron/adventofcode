@@ -63,7 +63,7 @@ end
 rs = []
 
 open("input.txt").each_line do |line|
-  if line.strip =~ %r{^(\w+) can fly (\d+) km/s for (\d+) seconds, but then must rest for (\d+) seconds}
+  if line =~ %r{^(\w+) can fly (\d+) km/s for (\d+) seconds, but then must rest for (\d+) seconds}
     rs << Reindeer.new($1, $2.to_i, $3.to_i, $4.to_i)
   end
 end
